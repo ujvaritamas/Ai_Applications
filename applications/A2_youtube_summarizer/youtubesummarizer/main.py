@@ -3,7 +3,7 @@ from langchain_ollama import ChatOllama
 
 from youtube import youtube
 
-used_model = "gemma3:1b"
+used_model = "gemma3:4b" #"gemma3:1b"
 
 llm = ChatOllama(
     model=used_model,
@@ -22,17 +22,18 @@ messages = [
 def summarize_youtube_video(url: str):
     transcript = youtube.get_transcript(url)
 
-    print(transcript)
+    #print(transcript)
 
     messages = [
         (
             "system",
-            "You are an advanced summarization assistant. Your task is to provide a concise and accurate summary of the given transcript. Focus on the key points and main ideas while maintaining clarity and coherence.",
+            "You are an expert summarization assistant. Your task is to analyze the provided transcript of a YouTube video and generate a clear, concise, and engaging summary. Focus on the main topic, key points, and any important details that capture the essence of the video. Avoid unnecessary details and ensure the summary is easy to understand.",
         ),
-        ("human", f"Please summarize this transcript in 10 sentence: {transcript}"),
+        ("human", f"The following is a transcript of a YouTube video. Please summarize it and explain what the video is about: {transcript}"),
     ]
     ai_msg = llm.invoke(messages)
 
     print(ai_msg.content)
 
-summarize_youtube_video("https://www.youtube.com/watch?v=eur8dUO9mvE")
+#summarize_youtube_video("https://www.youtube.com/watch?v=eur8dUO9mvE")
+summarize_youtube_video("https://www.youtube.com/watch?v=jb4AAFCRPrI")
