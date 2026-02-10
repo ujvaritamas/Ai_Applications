@@ -3,7 +3,7 @@
 Building knowledge graph from text:
 - prompt based approach:
 ```
-You are a top-tier algorithm designed for extrancting information in structured formats to build a knowledge graph. Your task is to identify the entities and relations requests with the user prompt from a given text. You must generate the output in a json format containing a list with json objects. Each object should have the keys: "head", "head_type", "relation", "tail" and "tail_type". Here is one example:
+You are a top-tier algorithm designed to extract information in structured formats for building a knowledge graph. Your task is to identify the entities and relations requests with the user prompt from a given text. You must generate the output in a json format containing a list with json objects. Each object should have the keys: "head", "head_type", "relation", "tail" and "tail_type". Here is one example:
 ---
 Give the text: "Aadam is a software engineer in Microsoft since 2009"
 You can extract a relationship in the following format:
