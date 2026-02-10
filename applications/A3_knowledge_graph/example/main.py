@@ -1,4 +1,3 @@
-
 from LLMGraphTransformer import LLMGraphTransformer
 from LLMGraphTransformer.schema import NodeSchema, RelationshipSchema
 from langchain_core.documents import Document
@@ -41,6 +40,8 @@ llm_transformer = LLMGraphTransformer(
 
 document = Document(page_content=text)
 graph_document = llm_transformer.convert_to_graph_document(document)
+
+
 
 print(f"Nodes: {graph_document.nodes}")
 print(f"Relationships: {graph_document.relationships}")
@@ -93,3 +94,79 @@ try:
 except:
     print("Could not open browser automatically")
 
+# Function to query the knowledge graph
+def query_knowledge_graph(query_text, graph_document):
+    """
+    Query the knowledge graph using the query text and return relevant results.
+    """
+    results = []
+    
+    # Clean the query text (remove special characters)
+    query_text = query_text.replace("?", "").strip()
+
+    # Search for matching relationships
+    for relationship in graph_document.relationships:
+        # Check if query matches relationship type
+        if query_text.lower() in relationship.type.lower():
+            results.append({
+                "source": relationship.source.id,
+                "target": relationship.target.id,
+                "type": relationship.type,
+                "properties": relationship.properties
+            })
+        # Check if query matches relationship source or target
+        elif (query_text.lower() in relationship.source.id.lower() or 
+              query_text.lower() in relationship.target.id.lower()):
+            results.append({
+                "source": relationship.source.id,
+                "target": relationship.target.id,
+                "type": relationship.type,
+                "properties": relationship.properties
+            })
+
+    # Search for nodes matching the query
+    for node in graph_document.nodes:
+        # Check node ID
+        if query_text.lower() in node.id.lower():
+            results.append({
+                "id": node.id,
+                "type": node.type,
+                "properties": node.properties
+            })
+        # Check node type
+        elif query_text.lower() in node.type.lower():
+            results.append({
+                "id": node.id,
+                "type": node.type,
+                "properties": node.properties
+            })
+        # Check node properties
+        elif any(query_text.lower() in str(value).lower() for value in node.properties.values()):
+            results.append({
+                "id": node.id,
+                "type": node.type,
+                "properties": node.properties
+            })
+
+    # Print the query result
+    if not results:
+        print("No results found for the query.")
+    else:
+        print("Query Result:")
+        for result in results:
+            print(result)
+
+    return results
+
+# Example usage (simple query)
+query_text = "Marie Curie"
+query_result = query_knowledge_graph(query_text, graph_document)
+
+# Display the query result
+for result in query_result:
+    if "id" in result:
+        # This is a node
+        print(f"Node: {result['id']} ({result['type']}) - Properties: {result['properties']}")
+    else:
+        # This is a relationship
+        print(f"Relationship: {result['source']} --[{result['type']}]--> {result['target']} - Properties: {result['properties']}")
