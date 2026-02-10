@@ -44,3 +44,52 @@ graph_document = llm_transformer.convert_to_graph_document(document)
 
 print(f"Nodes: {graph_document.nodes}")
 print(f"Relationships: {graph_document.relationships}")
+
+### visualization
+from pyvis.network import Network
+
+# Create a network graph
+net = Network(height="750px", width="100%", bgcolor="#222222", font_color="white", directed=True)
+
+# Configure physics for better layout
+net.force_atlas_2based()
+
+# Add nodes to the graph
+node_colors = {
+    "Person": "#FF6B6B",
+    "Organization": "#4ECDC4",
+    "Location": "#45B7D1",
+    "Award": "#FFA07A"
+}
+
+for node in graph_document.nodes:
+    color = node_colors.get(node.type, "#95E1D3")
+    title = f"Type: {node.type}<br>" + "<br>".join([f"{k}: {v}" for k, v in node.properties.items()])
+    net.add_node(node.id, label=node.id, color=color, title=title, size=25)
+
+# Add edges (relationships) to the graph
+for relationship in graph_document.relationships:
+    title = relationship.type
+    if relationship.properties:
+        title += "<br>" + "<br>".join([f"{k}: {v}" for k, v in relationship.properties.items()])
+    net.add_edge(
+        relationship.source.id, 
+        relationship.target.id, 
+        label=relationship.type,
+        title=title,
+        arrows="to"
+    )
+
+# Save and display the graph
+output_file = "knowledge_graph.html"
+net.save_graph(output_file)
+print(f"Knowledge graph saved to {output_file}")
+print("Open the file in your browser to view the interactive graph.")
+
+try:
+    import webbrowser
+    import os
+    webbrowser.open(f"file://{os.path.abspath(output_file)}")
+except:
+    print("Could not open browser automatically")
+
