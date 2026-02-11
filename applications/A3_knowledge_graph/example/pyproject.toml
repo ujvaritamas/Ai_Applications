@@ -9,5 +9,7 @@ dependencies = [
     "langchain-experimental>=0.4.1",
     "langchain-ollama>=1.0.1",
     "llmgraphtransformer>=0.0.2",
+    "matplotlib>=3.10.8",
+    "networkx>=3.6.1",
     "pyvis>=0.3.2",
 ]

@@ -42,3 +42,8 @@ uv add LLMGraphTransformer
 #uv add python-dotenv
 uv add pyvis #network graph visualization
 ```
+
+
+```
+uv run main.py --viz-type matplotlib
+```
