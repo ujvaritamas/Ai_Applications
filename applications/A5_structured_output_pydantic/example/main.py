@@ -34,19 +34,3 @@ print(type(result["structured_response"]))
 for i in result["structured_response"]:
     print(i)
 
-
-#llm.invoke()
-
-
-# Make structured output request
-#response = llm.chat.complete(
-#    model="mistral-large-latest",
-#    messages=[{
-#        "role": "user",
-#        "content": "Extract person info: John Doe is 30 years old, email: john@example.com, resides in Austria."
-#    }],
-#    response_format={
-#        "type": "json_object",
-#        "schema": person.Person.model_json_schema()
-#    }
-#)
