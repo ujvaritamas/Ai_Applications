@@ -1,0 +1,127 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 1200px;
+                 background-color: #222222;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#97c2fc", "font": {"color": "white"}, "id": "Juan \u00c1ngel Seguro", "label": "Juan \u00c1ngel Seguro\n(Person)\nbirth_year: 1962", "shape": "dot", "size": 25, "title": "Type: Person\nProperties: {\u0027birth_year\u0027: 1962}"}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Ant\u00f3nio Jos\u00e9 Seguro", "label": "Ant\u00f3nio Jos\u00e9 Seguro\n(Person)", "shape": "dot", "size": 25, "title": "Type: Person\nProperties: {}"}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Lu\u00eds Montenegro", "label": "Lu\u00eds Montenegro\n(Person)", "shape": "dot", "size": 25, "title": "Type: Person\nProperties: {}"}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Marcelo Rebelo de Sousa", "label": "Marcelo Rebelo de Sousa\n(Person)", "shape": "dot", "size": 25, "title": "Type: Person\nProperties: {}"}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Pedro Passos Coelho", "label": "Pedro Passos Coelho\n(Person)", "shape": "dot", "size": 25, "title": "Type: Person\nProperties: {}"}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Jos\u00e9 S\u00f3crates", "label": "Jos\u00e9 S\u00f3crates\n(Person)", "shape": "dot", "size": 25, "title": "Type: Person\nProperties: {}"}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Maria de Bel\u00e9m Roseira", "label": "Maria de Bel\u00e9m Roseira\n(Person)", "shape": "dot", "size": 25, "title": "Type: Person\nProperties: {}"}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Ant\u00f3nio de Almeida Santos", "label": "Ant\u00f3nio de Almeida Santos\n(Person)", "shape": "dot", "size": 25, "title": "Type: Person\nProperties: {}"}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Armando Vara", "label": "Armando Vara\n(Person)", "shape": "dot", "size": 25, "title": "Type: Person\nProperties: {}"}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Jos\u00e9 Lu\u00eds Arnaut", "label": "Jos\u00e9 Lu\u00eds Arnaut\n(Person)", "shape": "dot", "size": 25, "title": "Type: Person\nProperties: {}"}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Jos\u00e9 Apolin\u00e1rio", "label": "Jos\u00e9 Apolin\u00e1rio\n(Person)", "shape": "dot", "size": 25, "title": "Type: Person\nProperties: {}"}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "S\u00e9rgio Sousa Pinto", "label": "S\u00e9rgio Sousa Pinto\n(Person)", "shape": "dot", "size": 25, "title": "Type: Person\nProperties: {}"}]);
+                  edges = new vis.DataSet([{"arrows": "to", "from": "Juan \u00c1ngel Seguro", "label": "President-elect of Portugal", "title": "President-elect of Portugal", "to": "Ant\u00f3nio Jos\u00e9 Seguro"}, {"arrows": "to", "from": "Ant\u00f3nio Jos\u00e9 Seguro", "label": "Prime Minister", "title": "Prime Minister", "to": "Lu\u00eds Montenegro"}, {"arrows": "to", "from": "Ant\u00f3nio Jos\u00e9 Seguro", "label": "Succeeding", "title": "Succeeding", "to": "Marcelo Rebelo de Sousa"}, {"arrows": "to", "from": "Pedro Passos Coelho", "label": "Preceded by", "title": "Preceded by", "to": "Jos\u00e9 S\u00f3crates"}, {"arrows": "to", "from": "Ant\u00f3nio Jos\u00e9 Seguro", "label": "Succeeded by", "title": "Succeeded by", "to": "Maria de Bel\u00e9m Roseira"}, {"arrows": "to", "from": "Ant\u00f3nio Jos\u00e9 Seguro", "label": "President", "title": "President", "to": "Ant\u00f3nio de Almeida Santos"}, {"arrows": "to", "from": "Armando Vara", "label": "Preceded by", "title": "Preceded by", "to": "Jos\u00e9 Lu\u00eds Arnaut"}, {"arrows": "to", "from": "Jos\u00e9 S\u00f3crates", "label": "Succeeded by", "title": "Succeeded by", "to": "Maria de Bel\u00e9m Roseira"}, {"arrows": "to", "from": "Ant\u00f3nio Jos\u00e9 Seguro", "label": "Preceded by", "title": "Preceded by", "to": "Armando Vara"}, {"arrows": "to", "from": "Jos\u00e9 Apolin\u00e1rio", "label": "Succeeded by", "title": "Succeeded by", "to": "S\u00e9rgio Sousa Pinto"}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {"physics": {"enabled": true, "barnesHut": {"gravitationalConstant": -30000, "centralGravity": 0.3, "springLength": 200, "springConstant": 0.04, "damping": 0.09}}, "interaction": {"dragNodes": true, "dragView": true, "zoomView": true}};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>

@@ -78,4 +78,5 @@ def generate_knowledge_graph(url: str) -> knowledge_graph.KnowledgeGraph:
 kg = generate_knowledge_graph("https://en.wikipedia.org/wiki/Ant%C3%B3nio_Jos%C3%A9_Seguro")
 print(f"result: {kg}")
 
-vizualization.render_graph(kg)
+#vizualization.render_graph(kg)
+vizualization.visualize_knowledge_graph_pyvis(kg)

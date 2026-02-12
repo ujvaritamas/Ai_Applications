@@ -1,5 +1,7 @@
 # Knowledge graph
 
+https://mirascope.com/blog/how-to-build-a-knowledge-graph
+
 - Entities are the primary subjects within the graph - whether people, organizations, places, or events - and each holds attributes relevant to that subject, like a "Person" entity with attributes of name, age, and occupation.
 - Relationships between entities - often called edges - show how these entities connect and interact, such as a "Person" node being linked to a "Company" node by a "works for" relationship
 - Properties add additional context, or metadata like dates or locations, to entities and edges.
@@ -41,6 +43,8 @@ uv add langchain
 uv add langchain_ollama
 uv add beautifulsoup4
 uv add requests
-git add matplotlib
-git add networkx
+uv add matplotlib
+uv add networkx
+uv add pyvis
+uv add jinja2 
 ```
