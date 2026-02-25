@@ -4,6 +4,20 @@ import os
 import re
 from pathlib import Path
 from .skill_tool import load_skill, Skill, list_skill
+from .domain_tools import (
+    calculator,
+    unit_converter,
+    kubectl_exec,
+    file_reader,
+    web_search,
+)
+from .domain_tools import (
+    calculator,
+    unit_converter,
+    kubectl_exec,
+    file_reader,
+    web_search,
+)
 
 # Load skills from the skills directory
 def load_skills_from_directory():

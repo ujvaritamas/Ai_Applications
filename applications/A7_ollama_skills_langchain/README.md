@@ -1,5 +1,9 @@
 # Ollama with antropic skills
 
+```
+ollama pull llama3.1:8b
+```
+
 This app is created to handle skills feature with ollama.
 
 This should dynamically load skills, and the agent can decide that skill should be used or not.
@@ -17,4 +21,9 @@ custom middleware that injects skill descriptions into the system prompt
 uv init skill_app
 uv add langchain
 uv add langchain-ollama
+```
+
+```
+cd skill_app
+uv run main.py
 ```
