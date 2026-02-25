@@ -26,13 +26,33 @@ result = agent.invoke(
             {
                 "role": "user",
                 "content": (
-                    "List all avaialbe skills and the contents"
+                    "List all avaialbe skills"
                 ),
             }
         ]
     }
 )
 
+
+# Print the conversation
+for message in result["messages"]:
+    if hasattr(message, 'pretty_print'):
+        message.pretty_print()
+    else:
+        print(f"{message.type}: {message.content}")
+
+result = agent.invoke(  
+    {
+        "messages": [
+            {
+                "role": "user",
+                "content": (
+                    "List all avaialbe skills and print the skill content"
+                ),
+            }
+        ]
+    }
+)
 
 # Print the conversation
 for message in result["messages"]:
