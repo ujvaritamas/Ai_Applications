@@ -3,7 +3,7 @@
 import os
 import re
 from pathlib import Path
-from .skill_tool import load_skill, Skill
+from .skill_tool import load_skill, Skill, list_skill
 
 # Load skills from the skills directory
 def load_skills_from_directory():
@@ -68,4 +68,4 @@ def load_skills_from_directory():
 SKILLS = load_skills_from_directory()
 
 # Export the load_skill tool and SKILLS
-__all__ = ['load_skill', 'SKILLS', 'Skill']
+#__all__ = ['load_skill', 'list_skill', 'SKILLS', 'Skill']

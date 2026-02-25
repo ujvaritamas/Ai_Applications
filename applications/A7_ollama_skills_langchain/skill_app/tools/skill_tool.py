@@ -32,3 +32,33 @@ def load_skill(skill_name: str) -> str:
     # Skill not found
     available = ", ".join(s["name"] for s in SKILLS)
     return f"Skill '{skill_name}' not found. Available skills: {available}"
+
+
+@tool
+def list_skill() -> str:
+    """List the available skills.
+
+    Use this when you need available skills. This will return with the skill names
+    and basic descriptions
+
+    Args:
+        skill_name: The name of the skill to load (e.g., "dummy_skill", "expense_reporting")
+    """
+    # ANSI color codes for better visibility
+    BOLD = '\033[1m'
+    CYAN = '\033[96m'
+    GREEN = '\033[92m'
+    RESET = '\033[0m'
+    
+    ret = f"\n{BOLD}Available skills:{RESET}\n"
+    ret += "=" * 60 + "\n"
+    
+    # Import here to avoid circular imports
+    from . import SKILLS
+    
+    # Find and return the requested skill
+    for skill in SKILLS:
+        ret += f"{CYAN}{BOLD}• {skill['name']}{RESET}\n"
+        ret += f"  {GREEN}{skill['description']}{RESET}\n\n"
+
+    return ret

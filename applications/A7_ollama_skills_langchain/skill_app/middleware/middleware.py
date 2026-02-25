@@ -9,7 +9,7 @@ class SkillMiddleware(AgentMiddleware):
     """Middleware that injects skill descriptions into the system prompt."""
 
     # Register the load_skill tool as a class variable
-    tools = [tools.load_skill]  
+    tools = [tools.load_skill, tools.list_skill]  
 
     def __init__(self):
         """Initialize and generate the skills prompt from SKILLS."""
@@ -31,7 +31,7 @@ class SkillMiddleware(AgentMiddleware):
         skills_addendum = ( 
             f"\n\n## Available Skills\n\n{self.skills_prompt}\n\n"
             "Use the load_skill tool when you need detailed information "
-            "about handling a specific type of request."
+            "about handling a specific type of request. Use list_skill to get available skills and some description."
         )
 
         # Append to system message content blocks
