@@ -34,7 +34,6 @@ def load_skill(skill_name: str) -> str:
     return f"Skill '{skill_name}' not found. Available skills: {available}"
 
 
-@tool
 def list_skill() -> str:
     """List the available skills.
 
