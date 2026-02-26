@@ -1,6 +1,7 @@
 from langchain_ollama import ChatOllama
 from langchain_core.tools import tool
 import subprocess
+import inquirer
 
 @tool
 def shell_command(command: str) -> str:
@@ -13,6 +14,26 @@ def shell_command(command: str) -> str:
         The output of the command
     """
     try:
+        questions = [
+            inquirer.List('action',
+                         message=f"Do you want to execute this command: {command}",
+                         choices=['Yes', 'No', 'View command details'],
+                         ),
+        ]
+        answers = inquirer.prompt(questions)
+        
+        if answers['action'] == 'No':
+            return "Command execution cancelled by user."
+        elif answers['action'] == 'View command details':
+            print(f"\nCommand: {command}")
+            print("This command will be executed in a shell with 30 second timeout.")
+            # Ask again after showing details
+            confirm = inquirer.List('confirm',
+                                   message="Proceed with execution?",
+                                   choices=['Yes', 'No'])
+            if inquirer.prompt([confirm])['confirm'] == 'No':
+                return "Command execution cancelled by user."
+
         result = subprocess.run(
             command,
             shell=True,
