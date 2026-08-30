@@ -1,0 +1,32 @@
+services:
+  langchain-api:
+    build: .
+    container_name: langchain-api
+    ports:
+      - "8000:8000"
+    environment:
+      - OLLAMA_URL=http://host.docker.internal:11434
+    networks:
+      - openwebui-network
+
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: open-webui
+    ports:
+      - "3000:8080"
+    volumes:
+      - open-webui-data:/app/backend/data
+    environment:
+      - OPENAI_API_BASE_URL=http://langchain-api:8000/v1
+      #- OPENAI_API_KEY=dummy-key
+    depends_on:
+      - langchain-api
+    networks:
+      - openwebui-network
+
+networks:
+  openwebui-network:
+    driver: bridge
+
+volumes:
+  open-webui-data:
