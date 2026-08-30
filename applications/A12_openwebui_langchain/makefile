@@ -9,7 +9,7 @@ clean:
 	docker image rm -f test_openwebui_langchain
 
 run_all:
-	docker-compose up -d
+	docker-compose up -d --build
 
 clean_all:
 	docker-compose down -v

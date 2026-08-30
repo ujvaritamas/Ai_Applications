@@ -49,10 +49,10 @@ async def list_models(request: Request):
         "object": "list",
         "data": [
             {
-                "id": model["model"],
+                "id": "myagent_" + model["model"],
                 "object": "model",
                 "created": int(time.time()),
-                "owned_by": "ollama",
+                "owned_by": "myagent",
             }
             for model in response["models"]
         ],
